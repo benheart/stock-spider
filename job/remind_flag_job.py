@@ -20,8 +20,7 @@ def main():
                     for condition in conditions:
                         remind_dao.update_remind_flag(condition[0], False)
             except Exception as e:
-                print "Error: fail to update remind flag. Time: %s, Error: %s" % \
-                      (time.strftime("%H:%M:%S", time.localtime()), e)
+                print "Time: %s, Error: %s" % (time.strftime("%H:%M:%S", time.localtime()), e)
         if real_time > 25800:
             print 'Time is over 15:10'
             break
