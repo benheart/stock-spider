@@ -24,7 +24,7 @@ def main():
         if real_time > 25800:
             print 'Time is over 15:10'
             break
-        time.sleep(60 * 10)
+        time.sleep(60 * 5)
 
 
 if __name__ == '__main__':

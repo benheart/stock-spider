@@ -26,7 +26,7 @@ def send_mail(user_name, to_addr, stock_name, stock_code, price, rate):
     msg['To'] = _format_addr(u'%s <%s>' % (user_name, to_addr))
     msg['Subject'] = Header(u'【%s提醒】: %s（%s）%s: %.2f%%' %
                             (flag_a, stock_name, stock_code, flag_b, rate), 'utf-8').encode()
-    server = smtplib.SMTP(config.EMAIL_SMTP_SERVER, 25)
+    server = smtplib.SMTP(config.EMAIL_SMTP_SERVER, 25, timeout=10)
     # server.set_debuglevel(1)
     server.login(config.EMAIL_FROM_ADDR, config.EMAIL_PASSWORD)
     server.sendmail(config.EMAIL_FROM_ADDR, [to_addr], msg.as_string())

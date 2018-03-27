@@ -35,17 +35,17 @@ def main():
                             user_info = user_info_dict[condition[1]]
                             if rate >= condition[5] or rate <= condition[6] \
                                     or float(data_str[3]) >= condition[4] or float(data_str[3]) <= condition[3]:
-                                remind_dao.update_remind_flag(condition[0], True)
                                 print "Time: %s, send email to %s start, stock: %s, price: %s" % \
                                       (time.strftime("%H:%M:%S", time.localtime()), user_info[2], data_str[0], data_str[3])
                                 email_sender.send_mail(user_info[1], user_info[2], data_str[0], stock_code, data_str[3], rate)
+                                remind_dao.update_remind_flag(condition[0], True)
                                 print "Time: %s, send email successfully" % time.strftime("%H:%M:%S", time.localtime())
             except Exception as e:
                 print "Time: %s, Error: %s" % (time.strftime("%H:%M:%S", time.localtime()), e)
         if real_time > 25500:
             print 'Time is over 15:05'
             break
-        time.sleep(10)
+        time.sleep(60)
 
 
 if __name__ == '__main__':
