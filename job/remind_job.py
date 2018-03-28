@@ -28,16 +28,18 @@ def main():
                     if data_match:
                         data = data_match.group(1)
                         data_str = data.split(',')
-                        rate = (float(data_str[3]) - float(data_str[2])) / float(data_str[2]) * 100
+                        stock_name, opening_price, current_price = \
+                            data_str[0].encode("utf-8"), float(data_str[2]), float(data_str[3])
+                        rate = (current_price - opening_price) / opening_price * 100
                         for condition in conditions:
                             if condition[7] == 1:
                                 continue
                             user_info = user_info_dict[condition[1]]
                             if rate >= condition[5] or rate <= condition[6] \
-                                    or float(data_str[3]) >= condition[4] or float(data_str[3]) <= condition[3]:
-                                print "Time: %s, send email to %s start, stock: %s, price: %s" % \
-                                      (time.strftime("%H:%M:%S", time.localtime()), user_info[2], data_str[0], data_str[3])
-                                email_sender.send_mail(user_info[1], user_info[2], data_str[0], stock_code, data_str[3], rate)
+                                    or current_price >= condition[4] or current_price <= condition[3]:
+                                print "Time: %s, send email to %s start, stock: %s, price: %.2f" % \
+                                      (time.strftime("%H:%M:%S", time.localtime()), user_info[2], stock_name, current_price)
+                                email_sender.send_mail(user_info[1], user_info[2], stock_name, stock_code, current_price, rate)
                                 remind_dao.update_remind_flag(condition[0], True)
                                 print "Time: %s, send email successfully" % time.strftime("%H:%M:%S", time.localtime())
             except Exception as e:

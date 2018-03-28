@@ -21,7 +21,7 @@ def send_mail(user_name, to_addr, stock_name, stock_code, price, rate):
         flag_a, flag_b = u'买入', u'跌幅'
     datetime = time.strftime("%H:%M:%S", time.localtime())
     msg = MIMEText('时间：%s\n名称：%s\n代码：%s\n现价：%.2f\n振幅：%.2f%%' %
-                   (datetime, stock_name.encode("utf-8"), stock_code, float(price), rate), 'plain', 'utf-8')
+                   (datetime, stock_name, stock_code, float(price), rate), 'plain', 'utf-8')
     msg['From'] = _format_addr(u'股票监视器 <%s>' % config.EMAIL_FROM_ADDR)
     msg['To'] = _format_addr(u'%s <%s>' % (user_name, to_addr))
     msg['Subject'] = Header(u'【%s提醒】: %s（%s）%s: %.2f%%' %
