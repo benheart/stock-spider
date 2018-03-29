@@ -56,3 +56,24 @@ def update_remind_flag(remind_id, is_remind):
         print "Error: fail to update stock remind flag"
     # 关闭数据库连接
     db.close()
+
+
+def update_remind_price(remind_id, current_price, lower_price, higher_price):
+    # 打开数据库连接
+    db = MySQLdb.connect(config.DB_HOST, config.DB_USERNAME, config.DB_PASSWORD, config.DB_DATABASE)
+    # 使用cursor()方法获取操作游标
+    cursor = db.cursor()
+    # 查询预警条件
+    sql = """UPDATE user_stock_remind SET current_price = %s, lower_price = %s, higher_price = %s 
+             WHERE id = %s""" % (current_price, lower_price, higher_price, remind_id)
+    try:
+        # 执行SQL语句
+        cursor.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
+        print "Error: fail to update stock remind flag"
+    # 关闭数据库连接
+    db.close()
